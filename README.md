@@ -11,14 +11,24 @@ scroll.
 
 ## Install
 
+Pick whichever you like:
+
 ```sh
-git clone https://github.com/UrbanIndigo/hop
-cargo install --path hop
+# Homebrew (macOS / Linux)
+brew install urbanindigo/tap/hopi
+
+# Cargo (any platform with Rust)
+cargo install hopi
+
+# Shell one-liner (macOS / Linux)
+curl -LsSf https://github.com/UrbanIndigo/hopi/releases/latest/download/hopi-installer.sh | sh
+
+# PowerShell one-liner (Windows)
+powershell -c "irm https://github.com/UrbanIndigo/hopi/releases/latest/download/hopi-installer.ps1 | iex"
 ```
 
-That's it. You need Roblox Studio installed and logged in on the same
-machine — `hopi` borrows its session from Studio so there's nothing else to
-configure. macOS and Windows both work.
+You need Roblox Studio installed and logged in on the same machine — `hopi`
+borrows its session from there, so there's nothing else to configure.
 
 ## Usage
 
