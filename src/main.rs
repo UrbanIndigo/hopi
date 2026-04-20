@@ -9,7 +9,7 @@ use skim::prelude::*;
 use std::io::Cursor;
 
 #[derive(Parser)]
-#[command(name = "hop", about = "Open Roblox Studio places from the CLI")]
+#[command(name = "hopi", about = "Open Roblox Studio places from the CLI")]
 struct Cli {
     /// "me", "shared", or a group-name query. Omit for interactive mode.
     owner: Option<String>,

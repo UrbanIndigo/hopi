@@ -83,7 +83,7 @@ impl Api {
         );
         let client = Client::builder()
             .default_headers(headers)
-            .user_agent("hop/0.1")
+            .user_agent("hopi/0.1")
             .build()?;
         Ok(Self { client })
     }
