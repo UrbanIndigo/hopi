@@ -2,11 +2,10 @@ mod api;
 mod cookie;
 mod launcher;
 
-use anyhow::{Context, Result, anyhow};
+use anyhow::{Result, anyhow};
 use api::{Api, CreatorType, GroupInfo, Universe};
 use clap::{Parser, Subcommand};
-use skim::prelude::*;
-use std::io::Cursor;
+use inquire::Select;
 
 #[derive(Parser)]
 #[command(name = "hopi", about = "Open Roblox Studio places from the CLI")]
@@ -177,31 +176,12 @@ fn pick_place(places: &[Place], initial: Option<&str>) -> Result<Place> {
 }
 
 fn run_picker(labels: &[String], initial: Option<&str>, prompt: &'static str) -> Result<usize> {
-    let options = SkimOptionsBuilder::default()
-        .height(Some("40%"))
-        .query(initial)
-        .prompt(Some(prompt))
-        .build()
-        .map_err(|e| anyhow!("skim options: {e}"))?;
-
-    let input = labels.join("\n");
-    let reader = SkimItemReader::default();
-    let items = reader.of_bufread(Cursor::new(input));
-
-    let out = Skim::run_with(&options, Some(items)).context("picker failed")?;
-    if out.is_abort {
-        return Err(anyhow!("cancelled"));
+    let mut select = Select::new(prompt.trim_end_matches(" › "), labels.to_vec());
+    if let Some(s) = initial {
+        select = select.with_starting_filter_input(s);
     }
-    let selected = out
-        .selected_items
-        .into_iter()
-        .next()
-        .ok_or_else(|| anyhow!("no selection"))?;
-    let picked = selected.output().to_string();
-    labels
-        .iter()
-        .position(|l| l == &picked)
-        .ok_or_else(|| anyhow!("selected item not in list"))
+    let result = select.raw_prompt().map_err(|e| anyhow!("picker: {e}"))?;
+    Ok(result.index)
 }
 
 async fn debug_shared(api: &Api) -> Result<()> {
