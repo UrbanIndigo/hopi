@@ -1,46 +1,48 @@
-# hop
+# hop 🐇
 
-Open Roblox Studio places from the command line. Skip the Studio launcher,
-the Creations dashboard, the group dropdown, and the place grid — just fuzzy-
-pick and go.
+Stop clicking through Studio's Creations dashboard. Type a few letters, pick
+from the fuzzy list, and land in the place you wanted — all in under a
+second.
+
+`hop` reads your Studio login, pulls every experience you can edit (yours,
+groups you can manage, and Team-Create invites), and opens whichever one you
+point at. No sync step. No API keys. No waiting for that group dropdown to
+scroll.
 
 ## Install
 
-```
-cargo install --path .
+```sh
+git clone https://github.com/UrbanIndigo/hop
+cargo install --path hop
 ```
 
-This puts `hop` in `~/.cargo/bin`. You'll need Roblox Studio installed and
-logged in on the same machine — `hop` reads the `.ROBLOSECURITY` cookie
-straight out of Studio's local config (`~/Library/Preferences/com.roblox.RobloxStudioBrowser.plist`
-on macOS, `HKCU\SOFTWARE\Roblox\RobloxStudioBrowser\roblox.com` on Windows)
-via the [`rbx_cookie`](https://crates.io/crates/rbx_cookie) crate. No
-passwords, API keys, or manual setup.
+That's it. You need Roblox Studio installed and logged in on the same
+machine — `hop` borrows its session from Studio so there's nothing else to
+configure. macOS and Windows both work.
 
 ## Usage
 
-Interactive (3-step picker):
+Just run it:
 
 ```
 hop
 ```
 
-Step 1 offers `My Experiences`, `Shared with me`, `Group Experiences`. Step 2
-is the place list for Me/Shared, or a group list for Groups. Step 3 (Groups
-only) is the place list for the picked group.
+You'll get a three-step picker: *My Experiences / Shared with me / Group
+Experiences* → (maybe a group) → the place itself. Arrow keys, fuzzy
+matching, enter to launch.
 
-Shortcuts:
+Know where you're going? Skip straight to it:
 
-```
-hop me                    # pick from your own experiences
-hop me tycoon             # direct open if unique, picker if ambiguous
-hop shared                # pick from Team-Create-shared experiences
+```sh
+hop me                    # your own experiences
+hop me tycoon             # opens directly if only one place matches
+
+hop shared                # places other people have shared with you
 hop shared troll
 
-hop bluestar              # fuzzy-match a group, then pick a place
-hop bluestar troll        # direct open if unique within the group
+hop <group>               # any unknown first arg is a fuzzy group-name match
+hop <group> <place>       # straight into that place if exactly one matches
 ```
 
-Any first argument that isn't `me` / `self` / `mine` / `shared` is treated as
-a fuzzy group-name query.
-
+Go hop somewhere. 🐇
