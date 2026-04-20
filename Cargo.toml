@@ -2,6 +2,13 @@
 name = "hopi"
 version = "0.1.0"
 edition = "2024"
+description = "Open Roblox Studio places from the command line"
+license = "MIT"
+repository = "https://github.com/UrbanIndigo/hopi"
+homepage = "https://github.com/UrbanIndigo/hopi"
+readme = "README.md"
+keywords = ["roblox", "studio", "cli"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 anyhow = "1"
@@ -17,3 +24,8 @@ tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 [profile.release]
 lto = "thin"
 strip = true
+
+# The profile that 'dist' will build with
+[profile.dist]
+inherits = "release"
+lto = "thin"
